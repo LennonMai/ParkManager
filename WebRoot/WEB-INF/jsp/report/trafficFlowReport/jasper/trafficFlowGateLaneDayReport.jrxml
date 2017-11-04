@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trafficFlowGateLaneDayReport" language="groovy" pageWidth="646" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="606" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.128947860107555"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="8"/>
+	<parameter name="startTime" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endTime" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="creator" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="areaNoValue" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parkNoValue" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select tempdb.GateNo,
+                    rtrim((select  GateName from tb_Gateway where tb_Gateway.AreaNo=$P{areaNoValue} and tb_Gateway.ParkNo=$P{parkNoValue}
+                        and tb_Gateway.GateNo=tempdb.GateNo )) as GateName,
+                    tempdb.SquadDate, tempdb.LaneNo, tempdb.squadNo, tempdb.vehgoodcountsum, tempdb.vehfreecountsum,
+                    tempdb.vehcampuscountsum, tempdb.vehcheduicountsum, tempdb.vehunpaycountsum,
+                    tempdb.vehetccountsum, tempdb.vehnoknowncountsum
+                    from (
+                        select GateNo,SquadDate,LaneNo,squadNo ,
+                        sum (case vehclass when 1 then vehcountsum else 0 end ) as vehgoodcountsum,
+                        sum (case vehclass when 2 then vehcountsum else 0 end ) as vehfreecountsum,
+                        sum (case vehclass when 3 then vehcountsum else 0 end ) as vehcampuscountsum,
+                        sum (case vehclass when 4 then vehcountsum else 0 end ) as vehcheduicountsum,
+                        sum (case vehclass when 5 then vehcountsum else 0 end ) as vehunpaycountsum,
+                        sum (case vehclass when 6 then vehcountsum else 0 end ) as vehetccountsum,
+                        sum (case vehclass when 9 then vehcountsum else 0 end ) as vehnoknowncountsum
+                        from tb_inlistsum
+                        where tb_InListSum.AreaNo=$P{areaNoValue} and tb_InListSum.ParkNo=$P{parkNoValue}
+                            and tb_InListSum.SquadDate between $P{startTime} and $P{endTime}
+                        group by  GateNo,squaddate ,LaneNo, squadNo
+                        union
+                        select GateNo,SquadDate,LaneNo,squadNo ,
+                        sum (case vehclass when 1 then vehcountsum else 0 end ) as vehgoodcountsum,
+                        sum (case vehclass when 2 then vehcountsum else 0 end ) as vehfreecountsum,
+                        sum (case vehclass when 3 then vehcountsum else 0 end ) as vehcampuscountsum,
+                        sum (case vehclass when 4 then vehcountsum else 0 end ) as vehcheduicountsum,
+                        sum (case vehclass when 5 then vehcountsum else 0 end ) as vehunpaycountsum,
+                        sum (case vehclass when 6 then vehcountsum else 0 end ) as vehetccountsum,
+                        sum (case vehclass when 9 then vehcountsum else 0 end ) as vehnoknowncountsum
+                        from tb_outlistsum
+                        where tb_outlistsum.AreaNo=$P{areaNoValue} and tb_outlistsum.ParkNo=$P{parkNoValue}
+                            and tb_outlistsum.SquadDate between $P{startTime} and $P{endTime}
+                        group by  GateNo,squaddate ,LaneNo, squadNo
+                    ) as tempdb
+                    order by tempdb.GateNo,tempdb.squaddate desc,tempdb.LaneNo, tempdb.squadNo]]>
+	</queryString>
+	<field name="GateNo" class="java.lang.Short"/>
+	<field name="GateName" class="java.lang.String"/>
+	<field name="SquadDate" class="java.sql.Timestamp"/>
+	<field name="LaneNo" class="java.lang.Short"/>
+	<field name="squadNo" class="java.lang.Short"/>
+	<field name="vehgoodcountsum" class="java.lang.Integer"/>
+	<field name="vehfreecountsum" class="java.lang.Integer"/>
+	<field name="vehcampuscountsum" class="java.lang.Integer"/>
+	<field name="vehcheduicountsum" class="java.lang.Integer"/>
+	<field name="vehunpaycountsum" class="java.lang.Integer"/>
+	<field name="vehetccountsum" class="java.lang.Integer"/>
+	<field name="vehnoknowncountsum" class="java.lang.Integer"/>
+	<sortField name="GateName"/>
+	<variable name="countDay" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$P{endTime}-$P{startTime}]]></variableExpression>
+	</variable>
+	<variable name="allvehgoodcountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehgoodcountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehfreecountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehfreecountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehcampuscountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehcampuscountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehcheduicountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehcheduicountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehunpaycountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehunpaycountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehetccountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehetccountsum}]]></variableExpression>
+	</variable>
+	<variable name="allvehnoknowncountsum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehnoknowncountsum}]]></variableExpression>
+	</variable>
+	<variable name="countSum" class="java.lang.Integer" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehgoodcountsum}+$F{vehfreecountsum}+$F{vehcampuscountsum}+$F{vehcheduicountsum}+$F{vehunpaycountsum}+$F{vehetccountsum}+$F{vehnoknowncountsum}]]></variableExpression>
+	</variable>
+	<variable name="allCountSum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{countSum}]]></variableExpression>
+	</variable>
+	<variable name="vehgoodcountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehgoodcountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehfreecountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehfreecountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehcampuscountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehcampuscountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehcheduicountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehcheduicountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehunpaycountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehunpaycountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehetccountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehetccountsum}]]></variableExpression>
+	</variable>
+	<variable name="vehnoknowncountsum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$F{vehnoknowncountsum}]]></variableExpression>
+	</variable>
+	<variable name="gateCountSum" class="java.lang.Integer" resetType="Group" resetGroup="GateName" calculation="Sum">
+		<variableExpression><![CDATA[$V{countSum}]]></variableExpression>
+	</variable>
+	<variable name="gateName" class="java.lang.String" resetType="Group" resetGroup="GateName" calculation="Count">
+		<variableExpression><![CDATA[$F{GateName}]]></variableExpression>
+	</variable>
+	<group name="GateName">
+		<groupExpression><![CDATA[$F{GateName}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<printWhenExpression><![CDATA[$F{GateName}]]></printWhenExpression>
+				<staticText>
+					<reportElement x="9" y="0" width="45" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[大门：]]></text>
+				</staticText>
+				<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+					<reportElement x="57" y="0" width="93" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{GateName}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="1" y="32" width="604" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="605" y="0" width="1" height="32"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="33">
+				<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+					<reportElement x="8" y="0" width="80" height="32"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{GateName}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="1" y="32" width="604" height="1"/>
+				</line>
+				<line>
+					<reportElement x="605" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="88" y="0" width="48" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="14" isBold="true" isItalic="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[合计]]></text>
+				</staticText>
+				<line>
+					<reportElement x="169" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="373" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="424" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="542" y="0" width="1" height="32"/>
+				</line>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="223" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehfreecountsum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="376" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehunpaycountsum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="494" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehnoknowncountsum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="545" y="0" width="58" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{gateCountSum}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="220" y="0" width="1" height="32"/>
+				</line>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="172" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehgoodcountsum}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="491" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="271" y="0" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="322" y="0" width="1" height="32"/>
+				</line>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="274" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehcampuscountsum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="325" y="0" width="46" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehcheduicountsum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#.##" isBlankWhenNull="true">
+					<reportElement x="426" y="0" width="63" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{vehetccountsum}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="13" width="290" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="24" isBold="true" isItalic="false" isUnderline="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[车流量分门分车道日报表]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="152" y="9" width="62" height="21"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{endTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="9" width="62" height="21"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{startTime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="12" width="60" height="16"/>
+				<textElement>
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[统计时间:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="139" y="18" width="9" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="537" y="11" width="54" height="16"/>
+				<textElement>
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[单位：辆]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<line>
+				<reportElement x="605" y="1" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="67" y="1" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="34"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="1" width="66" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[工班日期]]></text>
+			</staticText>
+			<line>
+				<reportElement x="542" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="545" y="1" width="58" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[小计]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="0" width="604" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="121" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[工班号]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="34" width="604" height="1"/>
+			</line>
+			<line>
+				<reportElement x="169" y="1" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="373" y="1" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="424" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="223" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[免费车]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[未付车]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[未知车]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[车道号]]></text>
+			</staticText>
+			<line>
+				<reportElement x="118" y="1" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="220" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="172" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[正常车]]></text>
+			</staticText>
+			<line>
+				<reportElement x="491" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="426" y="1" width="64" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[粤通卡车]]></text>
+			</staticText>
+			<line>
+				<reportElement x="271" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="274" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[小区车]]></text>
+			</staticText>
+			<line>
+				<reportElement x="322" y="1" width="1" height="33"/>
+			</line>
+			<staticText>
+				<reportElement x="325" y="1" width="46" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[车队车]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<line>
+				<reportElement x="67" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="542" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="66" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{SquadDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="545" y="0" width="58" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{countSum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="605" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="1" y="32" width="604" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="169" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="373" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="424" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="223" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehfreecountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="376" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehunpaycountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="494" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehnoknowncountsum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="118" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="70" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LaneNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="121" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{squadNo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="220" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="172" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehgoodcountsum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="491" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="322" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="274" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehcampuscountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="325" y="0" width="46" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehcheduicountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="426" y="0" width="63" height="32" printWhenGroupChanges="GateName"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{vehetccountsum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="256" y="1" width="27" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isItalic="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[第]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="283" y="1" width="51" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isItalic="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="334" y="1" width="27" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isItalic="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[页]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="50" width="54" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isItalic="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[制表人：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="50" width="67" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[制表时间：]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="464" y="50" width="118" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="50" width="68" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{creator}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="545" y="0" width="58" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allCountSum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="32" width="604" height="1"/>
+			</line>
+			<line>
+				<reportElement x="542" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="605" y="0" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="26" y="0" width="117" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="16" isBold="true" isItalic="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[总合计]]></text>
+			</staticText>
+			<line>
+				<reportElement x="169" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="373" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="424" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="223" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehfreecountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="376" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehunpaycountsum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="220" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="172" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehgoodcountsum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="491" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="322" y="0" width="1" height="32"/>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="274" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehcampuscountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="325" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehcheduicountsum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="427" y="0" width="62" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehetccountsum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="-1" width="605" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#.##" isBlankWhenNull="true">
+				<reportElement x="494" y="0" width="46" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allvehnoknowncountsum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

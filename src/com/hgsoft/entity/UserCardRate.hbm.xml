@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.UserCardRate" table="tb_UserCardRate" lazy="false">
+        <composite-id>
+            <key-property name="version" type="java.lang.Short">
+                <column name="Version" />
+            </key-property>
+            <key-property name="recNo" type="java.lang.Short">
+                <column name="RecNO" />
+            </key-property>
+        </composite-id>
+        <property name="userCardType" type="java.lang.Short">
+            <column name="UserCardType" not-null="true" />
+        </property>
+        <property name="year" type="java.lang.Short">
+            <column name="Year" not-null="true" />
+        </property>
+        <property name="month" type="java.lang.Short">
+            <column name="Month" not-null="true" />
+        </property>
+        <property name="day" type="java.lang.Short">
+            <column name="Day" not-null="true" />
+        </property>
+        <property name="money" type="java.lang.Integer">
+            <column name="Money" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

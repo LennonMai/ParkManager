@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.InOutSignDef" table="tb_InOutSignDef" >
+        <composite-id>
+            <key-property name="inGateNo" type="java.lang.Integer">
+                <column name="InGateNo" />
+            </key-property>
+            <key-property name="outGateNo" type="java.lang.Integer">
+                <column name="OutGateNo" />
+            </key-property>
+        </composite-id>
+        <property name="inOutSign" type="java.lang.Integer">
+            <column name="InOutSign" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="Remark" length="16" />
+        </property>
+    </class>
+</hibernate-mapping>

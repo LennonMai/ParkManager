@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.OpCardBlackList" table="tb_OpCardBlackList" >
+        <id name="cardNo" type="java.lang.String">
+            <column name="CardNo" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="opTime" type="java.util.Date">
+            <column name="OpTime" length="23" />
+        </property>
+        <property name="inValidTypeNo" type="java.lang.Short">
+            <column name="InValidTypeNo" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+1、执行createTable.sql建立vip进出口流水表
+
+2、删除出入口触发器
+drop trigger tr_InlistSplit;
+drop trigger tr_OutlistSplit;
+
+3、执行新触发器脚本
+tr_InlistSplit.sql  tr_OutlistSplit.sql
+
+4、将vip用户信息录入tb_IdCardInfo表，并下发车道，其中身份卡数据表tb_IDCardInfo
+如果PlateList字段为空，则表示所有车辆都可以用这张身份卡，否则只有此列表里的这些车可用这张身份卡
+PlateList字段里车牌用逗号隔开，例如：粤A23456,粤A23457,粤B0K999

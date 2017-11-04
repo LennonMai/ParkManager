@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.DeviceCode" table="tb_DeviceCode" >
+        <id name="deviceNo" type="java.lang.Short">
+            <column name="DeviceNo" />
+            <generator class="assigned"></generator>
+        </id>
+        <property name="deviceName" type="java.lang.String">
+            <column name="DeviceName" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

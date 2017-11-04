@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.DeviceActionCode" table="tb_DeviceActionCode">
+        <id name="deviceActionNo" type="java.lang.Short">
+            <column name="DeviceActionNo" />
+            <generator class="assigned"></generator>
+        </id>
+        <property name="deviceActionName" type="java.lang.String">
+            <column name="DeviceActionName" length="30" not-null="true" />
+        </property>
+        <property name="deviceNo" type="java.lang.Short">
+            <column name="DeviceNo" />
+        </property>
+    </class>
+</hibernate-mapping>

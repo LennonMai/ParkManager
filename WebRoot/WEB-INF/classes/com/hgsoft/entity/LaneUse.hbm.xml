@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.LaneUse" table="tb_LaneUse">
+        <composite-id>
+            <key-property name="areaNo" type="java.lang.Short">
+                <column name="AreaNo" />
+            </key-property>
+            <key-property name="parkNo" type="java.lang.Short">
+                <column name="ParkNo" />
+            </key-property>
+            <key-property name="gateNo" type="java.lang.Short">
+                <column name="GateNo" />
+            </key-property>
+            <key-property name="laneNo" type="java.lang.Short">
+                <column name="LaneNo" />
+            </key-property>
+        </composite-id>
+        <property name="laneComputerIp" type="java.lang.String">
+            <column name="LaneComputerIP" length="15" />
+        </property>
+       
+    </class>
+</hibernate-mapping>

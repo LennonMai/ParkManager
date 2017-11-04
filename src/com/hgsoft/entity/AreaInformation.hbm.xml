@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.AreaInformation" table="tb_Area" lazy="false">
+        <id name="areaNo" type="java.lang.Short">
+            <column name="AreaNo" />
+        </id>
+        <property name="areaName" type="java.lang.String">
+            <column name="AreaName" length="20" />
+        </property>
+        <property name="areaServerName" type="java.lang.String">
+            <column name="AreaServerName" length="16" />
+        </property>
+        <property name="areaServerIp" type="java.lang.String">
+            <column name="AreaServerIP" length="15" />
+        </property>
+        <property name="areaDomain" type="java.lang.String">
+            <column name="AreaDomain" length="30" />
+        </property>
+        <property name="areaDbname" type="java.lang.String">
+            <column name="AreaDBName" length="16" />
+        </property>
+        <property name="areaDbuserName" type="java.lang.String">
+            <column name="AreaDBUserName" length="8" />
+        </property>
+        <property name="areaDbpassword" type="java.lang.String">
+            <column name="AreaDBPassword" length="6" />
+        </property>
+          <property name="cityNo" type="java.lang.Short">
+            <column name="CityNo" />
+        </property>
+        <!--
+                       多个区域对于一个城市 
+        <many-to-one name="cityInformation" class="com.hgsoft.entity.CityInformation"  update="false" insert="false" fetch="select">
+            <column name="CityNo" />
+        </many-to-one>
+        -->
+        </class>
+</hibernate-mapping>

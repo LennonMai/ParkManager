@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.LaneInformation" table="tb_Lane"  lazy="false">
+        <composite-id>
+        <key-property name="areaNo" type="java.lang.Short">
+                <column name="AreaNo" />
+            </key-property>
+            <key-property name="parkNo" type="java.lang.Short">
+                <column name="ParkNo" />
+            </key-property>
+            <key-property name="gateNo" type="java.lang.Short">
+                <column name="GateNo" />
+            </key-property>
+            <key-property name="laneNo" type="java.lang.Short">
+                <column name="LaneNo" />
+            </key-property>
+        </composite-id>
+        <property name="laneTypeNo" type="java.lang.Short">
+            <column name="LaneTypeNo" not-null="true" />
+        </property>
+        <property name="laneComputerName" type="java.lang.String">
+            <column name="LaneComputerName" length="16" />
+        </property>
+        <property name="laneComputerIp" type="java.lang.String">
+            <column name="LaneComputerIP" length="15" not-null="true" />
+        </property>
+        <property name="isUse" type="java.lang.Integer">
+            <column name="isUse"/>
+        </property>
+        <!--
+         <many-to-one name="areaInformation" class="com.hgsoft.entity.AreaInformation"  update="false" insert="false" fetch="select" foreign-key="AreaNo">
+            <column name="AreaNo" />
+        </many-to-one>
+         <many-to-one name="parkInformation" class="com.hgsoft.entity.ParkInformation"  update="false" insert="false" fetch="select" foreign-key="ParkNo">
+            <column name="ParkNo" />
+        </many-to-one>
+         <many-to-one name="gatewayInformation" class="com.hgsoft.entity.GatewayInformation"  update="false" insert="false" fetch="select" foreign-key="GateNo">
+            <column name="GateNo" />
+        </many-to-one>
+    --></class>
+</hibernate-mapping>

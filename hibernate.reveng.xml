@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="sys_role" catalog="haili"
+		class="com.hgsoft.entity.Role">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="hl_contract" catalog="haili"
+		class="com.hgsoft.entity.Contract">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="sys_contract_check" catalog="haili"
+		class="ContractCheck">
+	</table>
+	<table name="projectcheckitem" catalog="haili"
+		class="ProjectCheckItem">
+	</table>
+	<table name="hl_draft" catalog="haili" class="Draft"></table>
+	<table name="hl_major" catalog="haili"
+		class="com.hgsoft.entity.Major">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="tmp_consultfee" catalog="haili" class="consultFee">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="hl_balanceinfo" catalog="haili" class="balanceInfo">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table catalog="parkdb" schema="dbo" name="t_park_sysparamconf"
+		class="Sysparamconf">
+		<primary-key>
+		   <generator class="native"></generator>
+		</primary-key>
+	</table>
+</hibernate-reverse-engineering>

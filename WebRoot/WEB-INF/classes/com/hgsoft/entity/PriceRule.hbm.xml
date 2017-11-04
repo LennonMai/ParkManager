@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.PriceRule" table="tb_PriceRule" lazy="false">
+        <composite-id>
+            <key-property name="parkNo" type="java.lang.Short">
+                <column name="ParkNo" />
+            </key-property>
+            <key-property name="feeTypeNo" type="java.lang.Short">
+                <column name="FeeTypeNo" />
+            </key-property>
+            <key-property name="vehTypeNo" type="java.lang.Short">
+                <column name="VehTypeNo" />
+            </key-property>
+            <key-property name="startRange" type="java.lang.Integer">
+                <column name="StartRange" />
+            </key-property>
+        </composite-id>
+        <property name="endRange" type="java.lang.Integer">
+            <column name="EndRange" />
+        </property>
+        <property name="allowStay" type="java.lang.Integer">
+            <column name="AllowStay" />
+        </property>
+        <property name="baseFee" type="java.lang.Integer">
+            <column name="BaseFee" />
+        </property>
+        <property name="stayAdd" type="java.lang.Integer">
+            <column name="StayAdd" />
+        </property>
+        <property name="addFee" type="java.lang.Integer">
+            <column name="AddFee" />
+        </property>
+        <property name="maxFee" type="java.lang.Integer">
+            <column name="MaxFee" />
+        </property>
+        <property name="verNo" type="java.lang.Integer">
+            <column name="VerNo" />
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="StartTime" length="23" />
+        </property>
+        <property name="backUp1" type="java.lang.Integer">
+            <column name="BackUp1" />
+        </property>
+    </class>
+</hibernate-mapping>

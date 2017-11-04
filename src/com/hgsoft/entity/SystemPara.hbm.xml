@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.SystemPara" table="tb_SystemPara" >
+        <composite-id>
+            <key-property name="paraClass" type="java.lang.Short">
+                <column name="ParaClass" />
+            </key-property>
+            <key-property name="item" type="java.lang.String">
+                <column name="Item" length="32" />
+            </key-property>
+        </composite-id>
+        <property name="itemValue" type="java.lang.String">
+            <column name="ItemValue" length="100" />
+        </property>
+        <property name="groupName" type="java.lang.String">
+            <column name="GroupName" length="32" />
+        </property>
+        <property name="itemOrder" type="java.lang.Short">
+            <column name="ItemOrder" not-null="true" />
+        </property>
+        <property name="sendControl" type="java.lang.Short">
+            <column name="SendControl" />
+        </property>
+    </class>
+</hibernate-mapping>

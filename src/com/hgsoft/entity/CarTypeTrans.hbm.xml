@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.CarTypeTrans" table="tb_CarTypeTrans" >
+        <composite-id>
+            <key-property name="startDate" type="java.lang.String">
+                <column name="StartDate" length="8" />
+            </key-property>
+            <key-property name="class_" type="java.lang.String">
+                <column name="Class" length="1" />
+            </key-property>
+            <key-property name="length" type="java.lang.Integer">
+                <column name="Length" />
+            </key-property>
+            <key-property name="height" type="java.lang.Integer">
+                <column name="Height" />
+            </key-property>
+            <key-property name="width" type="java.lang.Integer">
+                <column name="Width" />
+            </key-property>
+            <key-property name="wheelNumber" type="java.lang.Integer">
+                <column name="WheelNumber" />
+            </key-property>
+            <key-property name="axleNumber" type="java.lang.Short">
+                <column name="AxleNumber" />
+            </key-property>
+            <key-property name="weight" type="java.lang.Integer">
+                <column name="Weight" />
+            </key-property>
+        </composite-id>
+        <property name="vehType" type="java.lang.String">
+            <column name="VehType" length="1" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

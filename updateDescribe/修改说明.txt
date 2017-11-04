@@ -1,0 +1,19 @@
+一.修改流水查询中的特殊事件（特殊事件可组合）_cfy2012215(需要执行十进制转化成二进制的函数sql.txt中内容）(华工已更新（20120528），广外，广工,富力皇上皇都没更新）
+二.修改车道表，添加是否进行合计字段_cjh20120418(华工已更新（20120528），广外，广工，富力皇上皇都没更新）
+	alter table tb_lane add isUse int null default(1) with values;--1:表示合计启用，0表示不启用（需要执行sql）
+	模块中参数管理——基本信息——车道信息——修改中，添加：/baseInfo_lane_isUse.do;/baseInfo_lane_allUse.do;/baseInfo_lane_allNotUse.do;
+三。添加延长缴费期限功能_cfy20120418(华工,广外,广工,富力皇上皇都没更新）
+    系统管理-功能模快-卡票管理-校园卡管理-家属卡缴费
+    	输入如下值  
+    		上级模块：家属卡缴费
+			模块名称：延长缴费期限
+			首页地址：空
+			功能集合：/parkCard_extendPayEndTimeAffirm.do;
+			排序：40
+			是否隐藏：是
+			点击“添加”按钮
+四、丢卡分析，修改Tr_CardDynamicToLoseCard，Tr_OutlistSplit，Tr_InlistSplit_cfy20120426（	触发器设置丢卡分析）(华工，广外，广工,富力皇上皇都没更新）
+五、校园卡信息管理中的修改功能增加“是否使用显示图片”选择按钮，没选则设置tb_UserCardInfo图片属性为空，让车道产生图片修改tb_UserCardInfo图片属性_cfy20120517(华工已更新（20120528），广外，广工,富力皇上皇都没更新）
+
+    
+

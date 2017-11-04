@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.UnitollIntfUpload" table="tb_UnitollIntfUpload" lazy="false">
+        <id name="squadDate" type="java.util.Date">
+            <column name="squadDate" />
+            <generator class="assigned" />
+        </id>
+        <property name="isUpload" type="java.lang.Integer">
+            <column name="isUpload" not-null="true"/>
+        </property>
+        <property name="recCount" type="java.lang.Integer">
+            <column name="recCount" />
+        </property>
+        <property name="totalMoney" type="java.lang.Integer">
+            <column name="totalMoney" />
+        </property>
+        <property name="opTime" type="java.util.Date">
+            <column name="opTime" />
+        </property>
+    </class>
+</hibernate-mapping>

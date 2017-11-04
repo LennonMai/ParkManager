@@ -1,0 +1,7 @@
+/.settings/*
+/.svn/*
+/.classpath
+/.myhibernatedata
+/.mymetadata
+/.myumldata
+/.project

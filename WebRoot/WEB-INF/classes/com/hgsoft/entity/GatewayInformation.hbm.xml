@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.GatewayInformation" table="tb_Gateway"  lazy="false">
+        <composite-id>
+            <key-property name="areaNo" type="java.lang.Short">
+                <column name="AreaNo" />
+            </key-property>
+            <key-property name="parkNo" type="java.lang.Short">
+                <column name="ParkNo" />
+            </key-property>
+            <key-property name="gateNo" type="java.lang.Short">
+                <column name="GateNo" />
+            </key-property>
+        </composite-id>
+        <property name="gateName" type="java.lang.String">
+            <column name="GateName" length="20" />
+        </property>
+        <property name="gateAllName" type="java.lang.String">
+            <column name="GateAllName" length="20" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="Remark" length="50" />
+        </property><!--
+         <many-to-one name="areaInformation" class="com.hgsoft.entity.AreaInformation"  update="false" insert="false" fetch="select" foreign-key="AreaNo">
+            <column name="AreaNo" />
+        </many-to-one>
+         <many-to-one name="parkInformation" class="com.hgsoft.entity.ParkInformation"  update="false" insert="false" fetch="select" foreign-key="ParkNo">
+            <column name="ParkNo" />
+        </many-to-one>
+    --></class>
+</hibernate-mapping>

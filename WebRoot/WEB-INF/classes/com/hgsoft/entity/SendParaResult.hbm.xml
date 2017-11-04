@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.SendParaResult" table="tb_SendParaResult" >
+        <composite-id>
+            <key-property name="fieldValue" type="java.lang.String">
+                <column name="FieldValue" length="30" />
+            </key-property>
+            <key-property name="laneNo" type="java.lang.Short">
+                <column name="LaneNo" />
+            </key-property>
+            <key-property name="laneComputerIp" type="java.lang.String">
+                <column name="LaneComputerIP" length="15" />
+            </key-property>
+            <key-property name="tableName" type="java.lang.String">
+                <column name="TableName" length="30" />
+            </key-property>
+        </composite-id>
+        <property name="sendType" type="java.lang.Short">
+            <column name="SendType" not-null="true" />
+        </property>
+        <property name="fieldName" type="java.lang.String">
+            <column name="FieldName" length="30" />
+        </property>
+        <property name="fileName" type="java.lang.String">
+            <column name="FileName" length="30" />
+        </property>
+        <property name="sendTime" type="java.util.Date">
+            <column name="sendTime" length="23" />
+        </property>
+         <property name="sendResult" type="java.lang.Short">
+            <column name="sendResult"/>
+        </property>
+    </class>
+</hibernate-mapping>

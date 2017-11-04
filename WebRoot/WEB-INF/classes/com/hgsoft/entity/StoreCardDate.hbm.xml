@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.StoreCardDate" table="tb_StoreCardDate" lazy="false">
+        <id name="firTime" type="java.util.Date">
+            <column name="FirTime" length="23" />
+            <generator class="assigned" />
+        </id>
+    </class>
+</hibernate-mapping>

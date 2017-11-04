@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.ParkInformation" table="tb_Park" lazy="false">
+        <composite-id>
+            <key-property name="areaNo" type="java.lang.Short">
+                <column name="AreaNo" />
+            </key-property>
+            <key-property name="parkNo" type="java.lang.Short">
+                <column name="ParkNo" />
+            </key-property>
+            <key-property name="parkLevel" type="java.lang.String">
+                <column name="ParkLevel" length="1" />
+            </key-property>
+        </composite-id>
+        <property name="parkName" type="java.lang.String">
+            <column name="ParkName" length="20" />
+        </property>
+        <property name="parkFullName" type="java.lang.String">
+            <column name="ParkFullName" length="40" />
+        </property>
+        <property name="parkServerName" type="java.lang.String">
+            <column name="ParkServerName" length="16" />
+        </property>
+        <property name="parkServerIp" type="java.lang.String">
+            <column name="ParkServerIP" length="15" />
+        </property>
+        <property name="parkDomain" type="java.lang.String">
+            <column name="ParkDomain" length="30" />
+        </property>
+        <property name="parkDbname" type="java.lang.String">
+            <column name="ParkDBName" length="16" />
+        </property>
+        <property name="parkDbuserName" type="java.lang.String">
+            <column name="ParkDBUserName" length="8" />
+        </property>
+        <property name="parkDbpassword" type="java.lang.String">
+            <column name="ParkDBPassword" length="6" />
+        </property>
+        <property name="uplevelParkNo" type="java.lang.Short">
+            <column name="UplevelParkNo" />
+        </property>
+        <property name="parkSpaceCnt" type="java.lang.Integer">
+            <column name="ParkSpaceCnt" />
+        </property><!--
+                     多个区域对应一个小区 
+        <many-to-one name="areaInformation" class="com.hgsoft.entity.AreaInformation" update="false" insert="false" fetch="select" foreign-key="AreaNo">
+			<column name="AreaNo"/>
+		</many-to-one>
+    --></class>
+</hibernate-mapping>

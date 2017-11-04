@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.Sysparamconf" table="t_park_sysparamconf"  lazy="false">
+        <id name="sys_id" type="java.lang.Integer">
+            <column name="SYS_ID" />
+            <generator class="native" />
+        </id>
+        <property name="pname" type="java.lang.String">
+            <column name="PNAME" />
+        </property>
+        <property name="pvalue" type="java.lang.String">
+            <column name="PVALUE" />
+        </property>
+        <property name="ptype" type="java.lang.Integer">
+            <column name="PTYPE" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="REMARK" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+/* GENERAL ELEMENTS */
+
+#dataform .status {
+  padding-top: 2px;
+  padding-left: 8px;
+  vertical-align: top;
+  width: 246px;
+  white-space: nowrap;
+}
+
+#dataform label.error {
+  background:url("validate-image/unchecked.gif") no-repeat 20px 0px;
+  padding-left: 36px;
+  padding-bottom: 2px;
+  font-weight: bold;
+  color: #EA5200;
+}
+
+#dataform label.checked {
+  background:url("validate-image/checked.gif") no-repeat 20px 0px;
+}
+
+#dataform .success_msg {
+  font-weight: bold;
+  color: #0060BF;
+  margin-left: 19px;
+}

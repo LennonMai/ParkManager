@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+   <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+   <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+   <property name="jdbcUrl" value="jdbc:sqlserver://10.173.234.82:1433;databaseName=parkdbtest" /><!--  --><!-- parkdb_hnsf_20160229 -->
+   <property name="username" value="sa"/>
+   <property name="password" value="hgrica1@"/>
+   <property name="idleConnectionTestPeriod" value="60"/>
+   <property name="idleMaxAge" value="240"/>
+   <property name="maxConnectionsPerPartition" value="70"/>
+   <property name="minConnectionsPerPartition" value="10"/>
+   <property name="partitionCount" value="3"/>
+   <property name="acquireIncrement" value="5"/>
+   <property name="statementsCacheSize" value="100"/>
+   <property name="releaseHelperThreads" value="3"/>
+   <property name="transactionRecoveryEnabled" value="true"/>
+</bean> 
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.SQLServerDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/hgsoft/entity/Admin.hbm.xml</value>
+				<value>com/hgsoft/entity/Module.hbm.xml</value>
+				<value>com/hgsoft/entity/Config.hbm.xml</value>
+				<value>com/hgsoft/entity/Role.hbm.xml</value>
+				<value>com/hgsoft/entity/Account.hbm.xml</value>
+				<value>com/hgsoft/entity/AccountTrade.hbm.xml</value>
+				<value>com/hgsoft/entity/Car.hbm.xml</value>
+				<value>com/hgsoft/entity/SystemLog.hbm.xml</value>
+				<value>com/hgsoft/entity/UpdateAccountLog.hbm.xml</value>
+				<value>com/hgsoft/entity/User.hbm.xml</value>
+				<value>com/hgsoft/entity/Sysparamconf.hbm.xml</value>
+				<value>com/hgsoft/entity/InList.hbm.xml</value>
+				<value>com/hgsoft/entity/OutList.hbm.xml</value>	
+				<value>com/hgsoft/entity/HandInMoney.hbm.xml</value>
+				<value>com/hgsoft/entity/SquadLog.hbm.xml</value>
+				<value>com/hgsoft/entity/OwnerIncomeSum.hbm.xml</value>
+				<value>com/hgsoft/entity/AccountAgentExportLog.hbm.xml</value>
+				<value>com/hgsoft/entity/AccountAgentImportLog.hbm.xml</value>
+  				<value>com/hgsoft/entity/UnitollIntfUpload.hbm.xml</value>
+  								
+				<value>com/hgsoft/entity/VAccountTrade.hbm.xml</value>	
+				<value>com/hgsoft/entity/StoreCardBlackList.hbm.xml</value>
+				<value>com/hgsoft/entity/ICCardStorage.hbm.xml</value>
+				<value>com/hgsoft/entity/ICCardTransfer.hbm.xml</value>
+				<value>com/hgsoft/entity/CityInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/AreaInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/ParkInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/CarSpaceInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/PositionInformation.hbm.xml</value>
+                <value>com/hgsoft/entity/GatewayInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/LaneInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/SquadInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/SupplyLightInformation.hbm.xml</value>
+				<value>com/hgsoft/entity/PriceRule.hbm.xml</value>
+				<value>com/hgsoft/entity/Operator.hbm.xml</value>
+				<value>com/hgsoft/entity/CardInfo.hbm.xml</value>
+				<value>com/hgsoft/entity/CardType.hbm.xml</value>
+				<value>com/hgsoft/entity/CarType.hbm.xml</value>
+				<value>com/hgsoft/entity/UserCardInfo.hbm.xml</value>
+				<value>com/hgsoft/entity/CardOperation.hbm.xml</value>	
+				<value>com/hgsoft/entity/IdcardInfo.hbm.xml</value>
+				<value>com/hgsoft/entity/UserCardRate.hbm.xml</value>
+				<value>com/hgsoft/entity/PriceBase.hbm.xml</value>
+				<value>com/hgsoft/entity/UserCardBill.hbm.xml</value>
+				<value>com/hgsoft/entity/CardGroupInfo.hbm.xml</value>
+				<value>com/hgsoft/entity/CardGroup.hbm.xml</value>
+				<value>com/hgsoft/entity/BillStorage.hbm.xml</value>
+				<value>com/hgsoft/entity/BillTransfer.hbm.xml</value>
+				<value>com/hgsoft/entity/BillTransferDetail.hbm.xml</value>
+				<value>com/hgsoft/entity/CardHandOutIn.hbm.xml</value>
+				<value>com/hgsoft/entity/UserCardType.hbm.xml</value>
+				<value>com/hgsoft/entity/UserCardFeeRuleType.hbm.xml</value>
+				<value>com/hgsoft/entity/Staff.hbm.xml</value>
+				
+	            <value>com/hgsoft/entity/FeeRuleTypeDef.hbm.xml</value>
+	            <value>com/hgsoft/entity/FreeDays.hbm.xml</value>
+				<value>com/hgsoft/entity/InOutSignDef.hbm.xml</value>
+	            <value>com/hgsoft/entity/TimesSignDef.hbm.xml</value>
+	            <value>com/hgsoft/entity/VehFreeTimes.hbm.xml</value>  
+	            <value>com/hgsoft/entity/PriceRule_zd.hbm.xml</value>
+				<value>com/hgsoft/entity/ZJU_PriceBase.hbm.xml</value>
+				
+				<value>com/hgsoft/entity/TollyCardBlackList.hbm.xml</value>
+	            <value>com/hgsoft/entity/PassCardBlackList.hbm.xml</value>
+	            <value>com/hgsoft/entity/OpCardBlackList.hbm.xml</value>
+	            <value>com/hgsoft/entity/StoreCardDate.hbm.xml</value>
+	            <value>com/hgsoft/entity/TollyCardDate.hbm.xml</value>
+	            <value>com/hgsoft/entity/OBUDate.hbm.xml</value>
+	            <value>com/hgsoft/entity/SystemPara.hbm.xml</value>
+	            <value>com/hgsoft/entity/SendPara.hbm.xml</value>
+				<value>com/hgsoft/entity/SecurityUserInfo.hbm.xml</value> 
+  				<value>com/hgsoft/entity/SecurityCommand.hbm.xml</value> 
+  				<value>com/hgsoft/entity/SecurityCommandBackup.hbm.xml</value> 
+  				<value>com/hgsoft/entity/SecurityCommandOperation.hbm.xml</value> 
+  				<value>com/hgsoft/entity/SecurityVehPass.hbm.xml</value> 
+  				<value>com/hgsoft/entity/BasisOfSecurityVehPass.hbm.xml</value> 
+  				<value>com/hgsoft/entity/SecurityQueryHis.hbm.xml</value>
+  				<value>com/hgsoft/entity/AllInList.hbm.xml</value>
+  				<value>com/hgsoft/entity/AllOutList.hbm.xml</value>
+  				<value>com/hgsoft/entity/CardDynamic.hbm.xml</value>
+  				<value>com/hgsoft/entity/IdentifyResult.hbm.xml</value>
+  				<value>com/hgsoft/entity/LoseCardHis.hbm.xml</value>
+  				<value>com/hgsoft/entity/InListForAuto.hbm.xml</value>
+  				<value>com/hgsoft/entity/OutListForAuto.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneRole.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneModule.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneOperator.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneOperatorRole.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneOperatorPrivilege.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneRoleModule.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneUse.hbm.xml</value>
+  				<value>com/hgsoft/entity/VehNoCmpPlate.hbm.xml</value>
+  				<value>com/hgsoft/entity/SpecialVeh.hbm.xml</value>
+  				<value>com/hgsoft/entity/SpecialType.hbm.xml</value>
+  
+  				<value>com/hgsoft/entity/VehClassCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/VehTypeCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/DeviceCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/FunctionKey.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarClassCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarBrandCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarTypeTrans.hbm.xml</value>
+  				<value>com/hgsoft/entity/LaneType.hbm.xml</value>
+  				<value>com/hgsoft/entity/SpEventCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/DeviceActionCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/DeviceErrorCode.hbm.xml</value>
+				<value>com/hgsoft/entity/TicketTypeCode.hbm.xml</value>
+  				<value>com/hgsoft/entity/UserCardBlackList.hbm.xml</value>
+  				<value>com/hgsoft/entity/SendParaResult.hbm.xml</value>
+  				<value>com/hgsoft/entity/SpVehHandle.hbm.xml</value>
+  				<value>com/hgsoft/entity/Pricepasstype.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarSpaceDynamic.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarSpaceShowMessage.hbm.xml</value>
+  				
+  				<value>com/hgsoft/entity/OwnerIdentity.hbm.xml</value>
+  				<value>com/hgsoft/entity/CarSmallType.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+
+
+
+
+	<context:component-scan base-package="com.hgsoft" />
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 配置事务传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager"> 
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 定义使用事务管理的方法 -->
+	<aop:config>
+		<aop:pointcut id="managerMethod" expression="execution(* com.hgsoft.service.*.*(..))"/>
+		<aop:advisor  pointcut-ref="managerMethod" advice-ref="txAdvice"/>
+	</aop:config>
+	<!-- 
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	-->
+
+	<bean id="jdbcUtil" class="com.hgsoft.util.JdbcUtil">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">   
+        <property name="sessionFactory" ref="sessionFactory"></property>   
+    </bean>
+    <!--构造第三方数据库操作工具类 AjaxBean-->
+    <bean id="ajaxBean" class="com.hgsoft.util.AjaxBean">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+    <bean id="timeBackupTaskThread" class="com.hgsoft.action.TimeBackupTaskThreadAction">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        <property name="jdbc" ref="jdbcUtil"></property>
+    </bean>
+    
+<!--	<bean class="com.hgsoft.thread.SynDataTh"-->
+<!--  		 init-method="start"  lazy-init="false">-->
+<!--	</bean>-->
+      <bean id="specialWhiteListControlThread" class="com.hgsoft.action.SpecialWhiteListControlThread">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        <property name="jdbc" ref="jdbcUtil"></property>
+    </bean>
+    
+    </beans>

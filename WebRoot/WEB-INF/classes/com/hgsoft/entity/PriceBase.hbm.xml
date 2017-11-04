@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.PriceBase" table="tb_PriceBase" >
+        <composite-id >
+            <key-property name="verNo" type="java.lang.Integer">
+                <column name="VerNo" />
+            </key-property>
+            <key-property name="feeNo" type="java.lang.Integer">
+                <column name="FeeNo" />
+            </key-property>
+            <key-property name="rebateType" type="java.lang.Integer">
+                <column name="RebateType" />
+            </key-property>
+            <key-property name="inOutSign" type="java.lang.Integer">
+                <column name="InOutSign" />
+            </key-property>
+            <key-property name="timesSign" type="java.lang.Integer">
+                <column name="TimesSign" />
+            </key-property>
+            <key-property name="vehTypeNo" type="java.lang.Integer">
+                <column name="VehTypeNo" />
+            </key-property>
+        </composite-id>
+        <property name="allowStayTime" type="java.lang.Integer">
+            <column name="AllowStayTime" />
+        </property>
+        <property name="baseFeeTime" type="java.lang.Integer">
+            <column name="BaseFeeTime" />
+        </property>
+        <property name="baseFee" type="java.lang.Integer">
+            <column name="BaseFee" />
+        </property>
+        <property name="stayAdd" type="java.lang.Integer">
+            <column name="StayAdd" />
+        </property>
+        <property name="addFee" type="java.lang.Integer">
+            <column name="AddFee" />
+        </property>
+        <property name="addStart" type="java.lang.Integer">
+            <column name="AddStart" />
+        </property>
+        <property name="maxFee" type="java.lang.Integer">
+            <column name="MaxFee" />
+        </property>
+        <property name="maxFeeTime" type="java.lang.Integer">
+            <column name="MaxFeeTime" />
+        </property>
+        <property name="maxTime" type="java.lang.Integer">
+            <column name="MaxTime" />
+        </property>
+        <property name="sumFeeCtr" type="java.lang.Integer">
+            <column name="SumFeeCtr" />
+        </property>
+        <property name="backup1" type="java.lang.String">
+            <column name="backup1" length="16" />
+        </property>
+        <property name="backup2" type="java.lang.String">
+            <column name="backup2" length="16" />
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="StartTime" length="23" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="Remark" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

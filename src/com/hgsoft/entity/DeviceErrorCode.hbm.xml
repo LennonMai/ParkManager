@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.DeviceErrorCode" table="tb_DeviceErrorCode" >
+        <id name="deviceErrorNo" type="java.lang.Short">
+            <column name="DeviceErrorNo" />
+            <generator class="assigned"></generator>
+        </id>
+        <property name="deviceErrorName" type="java.lang.String">
+            <column name="DeviceErrorName" length="30" not-null="true" />
+        </property>
+        <property name="deviceNo" type="java.lang.Short">
+            <column name="DeviceNo" />
+        </property>
+    </class>
+</hibernate-mapping>

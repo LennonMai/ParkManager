@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hgsoft.entity.SpecialVeh" table="tb_SpecialVeh" >
+        <composite-id>
+            <key-property name="vehPlate" type="java.lang.String">
+                <column name="VehPlate" length="12" />
+            </key-property>
+            <key-property name="cardNo" type="java.lang.String">
+                <column name="CardNo" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="specialType" type="java.lang.Integer">
+            <column name="SpecialType" not-null="true" />
+        </property>
+        <property name="lanetype" type="java.lang.Short">
+            <column name="lanetype" not-null="true" />
+        </property>
+        <property name="info" type="java.lang.String">
+            <column name="info" length="24" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts> 
+	<constant name="struts.action.extension" value="do" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.i18n.encoding" value="GBK" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.devMode" value="true" />
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="permission"
+				class="permissionInterceptor" />
+			<interceptor-stack name="permissionStack">
+				<interceptor-ref name="permission" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="permissionStack" />
+		<global-results>
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+			<result name="globalError">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+
+		<action name="randomCode" class="randomAction"></action>
+		<action name="sys_*" method="{1}" class="systemAction">
+			<result name="index">/WEB-INF/jsp/index.jsp</result>
+			<result name="top">/WEB-INF/jsp/top.jsp</result>
+			<result name="left">/WEB-INF/jsp/left.jsp</result>
+			<result name="right">/WEB-INF/jsp/right.jsp</result>
+			<result name="middle">/WEB-INF/jsp/middle.jsp</result>
+		</action>
+		<action name="login" method="login" class="adminAction">
+			<result name="success" type="redirect">sys_index.do</result>
+		</action>
+		<action name="admin_*" method="{1}" class="adminAction">
+			<result name="add">/WEB-INF/jsp/admin/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/admin/edit.jsp</result>
+			<result name="list">/WEB-INF/jsp/admin/list.jsp</result>
+			<result name="info">/WEB-INF/jsp/admin/info.jsp</result>
+		</action>
+		<action name="module_*" method="{1}" class="moduleAction">
+			<result name="edit">/WEB-INF/jsp/module/edit.jsp</result>
+		</action>
+		<action name="config_*" method="{1}" class="configAction">
+			<result name="edit">/WEB-INF/jsp/config/edit.jsp</result>
+		</action>
+		<action name="role_*" method="{1}" class="roleAction">
+			<result name="add">/WEB-INF/jsp/role/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/role/edit.jsp</result>
+			<result name="list">/WEB-INF/jsp/role/list.jsp</result>
+		</action>
+		<action name="major_*" method="{1}" class="majorAction">
+			<result name="add">/WEB-INF/jsp/major/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/major/edit.jsp</result>
+			<result name="list">/WEB-INF/jsp/major/list.jsp</result>
+		</action>
+		<action name="contract_*" method="{1}" class="contractAction">
+			<result name="add">/WEB-INF/jsp/contract/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/contract/edit.jsp</result>
+			<result name="list">/WEB-INF/jsp/contract/list.jsp</result>
+		</action>
+		<action name="contractcheck_*" method="{1}" class="contractCheckAction">
+			<result name="list">/WEB-INF/jsp/contractcheck/list.jsp</result>
+			<result name="add">/WEB-INF/jsp/contractcheck/check.jsp</result>
+			<result name="edit">WEB-INF/jsp/contractcheck/edit.jsp</result>
+			<result name="balancelist">/WEB-INF/jsp/contractcheck/list_balance.jsp</result>
+			<result name="balanceadd">/WEB-INF/jsp/contractcheck/balance.jsp</result>
+			<result name="balanceedit">WEB-INF/jsp/contractcheck/edit_balance.jsp</result>
+		</action>
+		<action name="project_*" method="{1}" class="projectAction">
+			<result name="add">/WEB-INF/jsp/project/add.jsp</result>
+			<result name="list">/WEB-INF/jsp/project/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/project/edit.jsp</result>
+
+		</action>
+		<action name="projectitem_*" method="{1}" class="itemAction">
+			<result name="add">/WEB-INF/jsp/item/add.jsp</result>
+			<result name="list">/WEB-INF/jsp/item/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/item/edit.jsp</result>
+			<result name="distributelist">/WEB-INF/jsp/item/list_dis.jsp</result>
+			<result name="distributeadd">/WEB-INF/jsp/item/distribute.jsp</result>
+			<result name="checklist">/WEB-INF/jsp/item/list_check.jsp</result>
+			<result name="checkadd">/WEB-INF/jsp/item/check.jsp</result>
+			<result name="firstdraftlist">/WEB-INF/jsp/item/list_firstdraftcheck.jsp</result>
+			<result name="fristdraftadd">/WEB-INF/jsp/item/add_firstdraftcheck.jsp</result>
+			<result name="firstdraftexaminelist">/WEB-INF/jsp/item/list_firstdraftexamine.jsp</result>
+			<result name="firstdraftexamineadd">/WEB-INF/jsp/item/add_firstdraftexamine.jsp</result>
+			<result name="lastdraftlist">/WEB-INF/jsp/item/list_lastdraft.jsp</result>
+			<result name="lastdraftadd">/WEB-INF/jsp/item/add_lastdraft.jsp</result>
+			<result name="lastdraftchecklist">/WEB-INF/jsp/item/list_lastdraftcheck.jsp</result>	
+			<result name="lastdraftcheck">/WEB-INF/jsp/item/add_lastdraftcheck.jsp</result>	 
+			<result name="lastdraftitemedit">/WEB-INF/jsp/item/edit_lastdraft.jsp</result>
+			<result name="lastdraftexaminelist">/WEB-INF/jsp/item/list_lastdraftexamine.jsp</result>
+			<result name="lastdraftexamineadd">/WEB-INF/jsp/item/add_lastdraftexamine.jsp</result>
+			<result name="listforlastdraft">/WEB-INF/jsp/draft/list_for_lastdraft.jsp</result>			
+			<result name="fristdraftcomeout">/WEB-INF/jsp/draft/list_project_firstdraft.jsp</result> 	 
+			<result name="commentrecord">/WEB-INF/jsp/item/commentrecord.jsp</result>
+		</action>
+		<action name="draft_*" method="{1}" class="draftAction">
+			<result name="listoffirstdraft">/WEB-INF/jsp/draft/listoffirstdraft.jsp</result>
+			<result name="listforfirstdraft">/WEB-INF/jsp/draft/list_project_firstdraft.jsp</result>
+			<result name="listforlastdraft">/WEB-INF/jsp/draft/list_project_lastdraft.jsp</result>
+			<result name="uncomeoutitemlist">/WEB-INF/jsp/draft/list_item_firstdraft.jsp</result>
+			<result name="addfirstdraft">/WEB-INF/jsp/draft/add_firstdraft.jsp</result>
+			<result name="firstdraftInfo">/WEB-INF/jsp/draft/add_firstdraft_info.jsp</result>
+			<result name="lastdraftitemlist">/WEB-INF/jsp/item/list_lastdraft.jsp</result>
+			
+			
+			<result name="listoflastdraft">/WEB-INF/jsp/draft/listoflastdraft.jsp</result>
+			<result name="listforlastdraft">/WEB-INF/jsp/draft/list_for_lastdraft.jsp</result>
+			<result name="itemsoffirstdraftlist">/WEB-INF/jsp/draft/list_itemsoffirstdraft.jsp</result>
+			<result name="addlastdraft">/WEB-INF/jsp/draft/add_lastdraft.jsp</result>
+			<result name="lastdraftinfo">/WEB-INF/jsp/draft/add_lastdraft_info.jsp</result>	
+		</action>
+		
+		<action name="workrecord_*" method="{1}" class="workRecordAction">
+			<result name="list">/WEB-INF/jsp/workrecord/list.jsp</result>
+			<result name="add">/WEB-INF/jsp/workrecord/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/workrecord/edit.jsp</result>
+		</action>
+		<action name="dba_*" method="{1}" class="dbaAction">
+			<result name="input">
+				<param name="location">/WEB-INF/jsp/dba/dbMain.jsp</param>
+			</result>
+			<result name="dbMain">/WEB-INF/jsp/dba/dbMain.jsp</result>
+			<result name="backup">/WEB-INF/jsp/dba/backup.jsp</result>
+		</action>
+		<action name="consultFee_*" method="{1}" class="consultFeeAction">
+			<result name="listPubLastDraft">/WEB-INF/jsp/consultFee/recheck/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/consultFee/recheck/edit.jsp</result>
+			<result name="balanceRegList">/WEB-INF/jsp/consultFee/balanceRegList.jsp</result>
+			<result name="itemDetail">/WEB-INF/jsp/consultFee/recheck/itemDetail.jsp</result>
+			<result name="gotoRecheck">/WEB-INF/jsp/consultFee/recheck/recheck.jsp</result>
+			<result name="toBalance">/WEB-INF/jsp/consultFee/balance.jsp</result>
+			<result name="listChargeReg">/WEB-INF/jsp/consultFee/chargeList.jsp</result>
+			<result name="toChargeReg">/WEB-INF/jsp/consultFee/chargeReg.jsp</result>
+			<result name="redirectAuditFee" type="redirect">auditFee_auditEdit.do?itemDetail.id=${itemDetail.id}</result>
+		</action>
+		<action name="auditFee_*" method="{1}" class="auditFeeAction">
+			<result name="add">/WEB-INF/jsp/auditFee/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/auditFee/edit.jsp</result>
+			<result name="list">/WEB-INF/jsp/auditFee/list.jsp</result>
+			<result name="toAuditList">/WEB-INF/jsp/auditFee/auditList.jsp</result>
+			<result name="toAuditEdit">/WEB-INF/jsp/auditFee/auditEdit.jsp</result>
+			<result name="toAuditPayList">/WEB-INF/jsp/auditFee/auditPayList.jsp</result>
+			<result name="toAuditPayEdit">/WEB-INF/jsp/auditFee/auditPayEdit.jsp</result>
+		</action>
+		
+		<action name="track_*" method="{1}" class="queryAction">
+			<result name="list">/WEB-INF/jsp/track/track_list.jsp</result>
+			<result name="linkInfo">/WEB-INF/jsp/track/track_linkList.jsp</result>
+		</action>
+		
+		<!-- 生成PDF的action -->
+		<action name="report_*PDF" method="{1}PDF" class="reportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="report_*" method="{1}" class="reportAction">
+			<param name="jasper">/WEB-INF/jsp/report/jasper/{1}.jasper</param>
+			<result name="tollsTradeDay">/WEB-INF/jsp/report/tollsTradeDayReport_edit.jsp</result>
+			<result name="tollsTradeMonth">/WEB-INF/jsp/report/tollsTradeMonthReport_edit.jsp</result>
+			<result name="trafficFlowDay">/WEB-INF/jsp/report/trafficFlowDayReport_edit.jsp</result>
+			<result name="trafficFlowMonth">/WEB-INF/jsp/report/trafficFlowMonthReport_edit.jsp</result>
+			<result name="payCardTrade">/WEB-INF/jsp/report/payCardTradeReport_edit.jsp</result>
+			<result name="printBill">/WEB-INF/jsp/report/printBillReport_edit.jsp</result>
+			<result name="inList">/WEB-INF/jsp/report/queryInList.jsp</result>
+			<result name="outList">/WEB-INF/jsp/report/queryOutList.jsp</result>
+			<result name="systemLog">/WEB-INF/jsp/report/querySystemLog.jsp</result>
+			<result name="toDelSystemLog">/WEB-INF/jsp/report/deleteSystemLog.jsp</result>
+			<result name="importSystemLog">/WEB-INF/jsp/report/importSystemLogToExcel.jsp</result>
+			<result name="carMonthBill">/WEB-INF/jsp/report/carMonthBillReport_edit.jsp</result>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<!-- 系统帮助下载action 下载现有文件-->
+		<action name="download" class="com.hgsoft.action.FileDownloadAction">
+			<param name="inputPath">/doc/小区车辆管理中心系统用户操作手册.doc</param>
+			<!-- 初始文件名 -->
+			<param name="fileName">小区车辆管理中心系统用户操作手册.doc</param>
+			<result name="success" type="stream">
+				<!-- 修改contentType为二进制方式 -->
+				<param name="contentType">application/octet-stream;charset=ISO8859-1</param>
+				<param name="inputName">inputStream</param>
+				<!-- 使用经过转码的文件名作为下载文件名，downloadFileName属性
+				对应action类中的方法 getDownloadFileName -->
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		<!-- 交接班管理 -->
+		<action name="handInMoney_*" method="{1}" class="handInMoneyAction">
+			<result name="list">/WEB-INF/jsp/report/businessProcess/handInMoney/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/report/businessProcess/handInMoney/edit.jsp</result>
+		</action>
+		<!-- 合计数修改 -->
+		<action name="squadLog_*" method="{1}" class="squadLogAction">
+			<result name="list">/WEB-INF/jsp/report/businessProcess/squadLog/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/report/businessProcess/squadLog/edit.jsp</result>
+		</action>
+		<!-- 生成合计数 -->
+		<action name="generateSum_*" method="{1}" class="generateSumAction">
+			<result name="list">/WEB-INF/jsp/report/businessProcess/generateSum/list.jsp</result>
+			<result name="edit">/WEB-INF/jsp/report/businessProcess/generateSum/edit.jsp</result>
+			<result name="sumLane">/WEB-INF/jsp/report/businessProcess/generateSum/sumLane.jsp</result>
+			<result name="sumAllLane">/WEB-INF/jsp/report/businessProcess/generateSum/sumAllLane.jsp</result>
+			<result name="printEdit">/WEB-INF/jsp/report/businessProcess/generateSum/printEdit.jsp</result>
+			<result name="printList">/WEB-INF/jsp/report/businessProcess/generateSum/printList.jsp</result>
+		</action>
+		<!-- 通行费报表 -->
+		<action name="tollsReport_*PDF" method="{1}PDF" class="tollsReportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/tollsReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="tollsReport_*" method="{1}" class="tollsReportAction">
+			<param name="jasper">/WEB-INF/jsp/report/tollsReport/jasper/{1}.jasper</param>
+			<result name="tollsTradeDay">/WEB-INF/jsp/report/tollsReport/tollsTradeDayReport_edit.jsp</result>
+			<result name="tollsCollectorDay">/WEB-INF/jsp/report/tollsReport/tollsCollectorDayReport_edit.jsp</result>
+			<result name="tollsOperSquadDates">/WEB-INF/jsp/report/tollsReport/tollsOperSquadDatesReport_edit.jsp</result>
+			<result name="tollsDayStatistics">/WEB-INF/jsp/report/tollsReport/tollsDayStatisticsReport_edit.jsp</result>
+			<result name="tollsGateLaneDay">/WEB-INF/jsp/report/tollsReport/tollsGateLaneDayReport_edit.jsp</result>
+			<result name="tollsTradeMonth">/WEB-INF/jsp/report/tollsReport/tollsTradeMonthReport_edit.jsp</result>
+			<result name="payCardTrade">/WEB-INF/jsp/report/tollsReport/payCardTradeReport_edit.jsp</result>
+			<result name="printBill">/WEB-INF/jsp/report/tollsReport/printBillReport_edit.jsp</result>
+			<result name="tollsLane">/WEB-INF/jsp/report/tollsReport/tollsLaneReport_edit.jsp</result>
+			<result name="tollsCashMoneyOperSquadDates">/WEB-INF/jsp/report/tollsReport/tollsCashMoneyOperSquadDatesReport_edit.jsp</result>
+			
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		
+		<!-- 另外数据源通行费报表 -->
+		<action name="otherTollsReport_*PDF" method="{1}PDF" class="otherTollsReportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/otherTollsReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="otherTollsReport_*" method="{1}" class="otherTollsReportAction">
+			<param name="jasper">/WEB-INF/jsp/report/otherTollsReport/jasper/{1}.jasper</param>
+			<result name="tollsTradeDay">/WEB-INF/jsp/report/otherTollsReport/tollsTradeDayReport_edit.jsp</result>
+			<result name="tollsCollectorDay">/WEB-INF/jsp/report/otherTollsReport/tollsCollectorDayReport_edit.jsp</result>
+			<result name="tollsOperSquadDates">/WEB-INF/jsp/report/otherTollsReport/tollsOperSquadDatesReport_edit.jsp</result>
+			<result name="tollsDayStatistics">/WEB-INF/jsp/report/otherTollsReport/tollsDayStatisticsReport_edit.jsp</result>
+			<result name="tollsGateLaneDay">/WEB-INF/jsp/report/otherTollsReport/tollsGateLaneDayReport_edit.jsp</result>
+			<result name="tollsTradeMonth">/WEB-INF/jsp/report/otherTollsReport/tollsTradeMonthReport_edit.jsp</result>
+			<result name="payCardTrade">/WEB-INF/jsp/report/otherTollsReport/payCardTradeReport_edit.jsp</result>
+			<result name="printBill">/WEB-INF/jsp/report/otherTollsReport/printBillReport_edit.jsp</result>
+			<result name="tollsLane">/WEB-INF/jsp/report/otherTollsReport/tollsLaneReport_edit.jsp</result>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<!-- 车流量报表 -->
+		<action name="trafficFlowReport_*PDF" method="{1}PDF" class="trafficFlowReportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/trafficFlowReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="trafficFlowReport_*" method="{1}" class="trafficFlowReportAction">
+			<param name="jasper">/WEB-INF/jsp/report/trafficFlowReport/jasper/{1}.jasper</param>
+			<result name="trafficFlowStatistics">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowStatisticsReport_edit.jsp</result>
+			<result name="trafficFlowOperSquadDates">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowOperSquadDatesReport_edit.jsp</result>
+			<result name="trafficFlowDay">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowDayReport_edit.jsp</result>
+			<result name="trafficFlowGateLaneDay">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowGateLaneDayReport_edit.jsp</result>
+			<result name="trafficFlowMonth">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowMonthReport_edit.jsp</result>
+			<result name="trafficFlowTollsDay">/WEB-INF/jsp/report/trafficFlowReport/trafficFlowTollsDayReport_edit.jsp</result>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<!-- 卡信息报表 -->
+		<action name="cardInfoReport_*PDF" method="{1}PDF" class="cardInfoReportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/cardInfoReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<!-- 生成Excel的action -->
+		<action name="cardInfoReport_*Excel" method="{1}Excel" class="cardInfoReportAction">
+			<param name="jasperExcel">/WEB-INF/jsp/report/cardInfoReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="cardInfoReport_*" method="{1}" class="cardInfoReportAction">
+			<param name="jasper">/WEB-INF/jsp/report/cardInfoReport/jasper/{1}.jasper</param>
+			<result name="cardInfo">/WEB-INF/jsp/report/cardInfoReport/cardInfoReport_edit.jsp</result>
+			<result name="cardDynamic">/WEB-INF/jsp/report/cardInfoReport/cardDynamicReport_edit.jsp</result>
+			<result name="carMonthBill">/WEB-INF/jsp/report/cardInfoReport/carMonthBillReport_edit.jsp</result>
+			<result name="carMonthBillDay">/WEB-INF/jsp/report/cardInfoReport/carMonthBillDayReport_edit.jsp</result>
+			<result name="carMonthBillDayType">/WEB-INF/jsp/report/cardInfoReport/carMonthBillDayTypeReport_edit.jsp</result>
+			<result name="carMonthParking">/WEB-INF/jsp/report/cardInfoReport/carMonthParkingReport_edit.jsp</result>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+			<result name="cardInfoInCarType">/WEB-INF/jsp/report/cardInfoReport/cardInfoReportInCarType_edit.jsp</result>
+		</action>
+		<!-- 通行卡报表 -->
+		<action name="passCardReport_*PDF" method="{1}PDF" class="passCardReportAction">
+			<param name="jasperPDF">/WEB-INF/jsp/report/passCardReport/jasper/{1}.jasper</param>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<action name="passCardReport_*" method="{1}" class="passCardReportAction">
+			<param name="jasper">/WEB-INF/jsp/report/passCardReport/jasper/{1}.jasper</param>
+			<result name="passCardHandOutIn">/WEB-INF/jsp/report/passCardReport/passCardHandOutInReport_edit.jsp</result>
+			<result name="passCardUsedOperSquad">/WEB-INF/jsp/report/passCardReport/passCardUsedOperSquadReport_edit.jsp</result>
+			<result name="error">/WEB-INF/jsp/report/error.jsp</result>
+		</action>
+		<!-- 粤通卡接口 -->
+		<action name="unitollInterface_*" method="{1}" class="unitollInterfaceAction">
+			<result name="listOwnerIncomeSum">/WEB-INF/jsp/unitollInterface/ownerIncomeSum_list.jsp</result>
+			<result name="listAccountAgentExportLog">/WEB-INF/jsp/unitollInterface/accountAgentExportLog_list.jsp</result>
+			<result name="ExportExecl">/WEB-INF/jsp/unitollInterface/accountAgentExportLog_list.jsp</result>
+			<result name="listAccountAgentImportLog">/WEB-INF/jsp/unitollInterface/accountAgentImportLog_list.jsp</result>
+			<result name="listUnitollIntfUpload">/WEB-INF/jsp/unitollInterface/unitollIntfUpload_list.jsp</result>			
+		</action>
+
+		<action name="monitor_*" method="{1}" class="monitorAction">
+			<result name="edit">/WEB-INF/jsp/monitor/edit.jsp</result>
+			<result name="bycontractmonitorlist">/WEB-INF/jsp/monitor/bycontract.jsp</result>
+		</action>
+		<action name="userCarAccount_*" method="{1}" class="userCarAccountAction">
+		        <result name="queryToAdd">/WEB-INF/jsp/usercaraccount/queryToAdd.jsp</result>
+				<result name="add">/WEB-INF/jsp/usercaraccount/add.jsp</result>
+				<result name="printAddAccount">/WEB-INF/jsp/usercaraccount/printAddAccount.jsp</result>		
+				<result name="printAdd">/WEB-INF/jsp/usercaraccount/printAdd.jsp</result>						
+				<result name="edit">/WEB-INF/jsp/usercaraccount/account_edit.jsp</result>
+             	<result name="list">/WEB-INF/jsp/usercaraccount/list.jsp</result>
+				<result name="update">/WEB-INF/jsp/usercaraccount/accountToUpdate.jsp</result>
+				<result name="printUpdateAccount">/WEB-INF/jsp/usercaraccount/printUpdateAccount.jsp</result>
+				<result name="printUpdate">/WEB-INF/jsp/usercaraccount/printUpdate.jsp</result>
+				<result name="queryToUpdate">/WEB-INF/jsp/usercaraccount/queryToUpdate.jsp</result>
+		</action>
+
+		<action name="account_*" method="{1}" class="accountAction">
+		<!-- ====================================充值=========================================== -->
+		       <result name="balanceQuery">/WEB-INF/jsp/account/balanceQuery.jsp</result>
+		       <result name="queryToPayment">/WEB-INF/jsp/account/queryToPayment.jsp</result>
+		       <result name="payment">/WEB-INF/jsp/account/payment.jsp</result>
+		        <result name="promptPaymentMessage">/WEB-INF/jsp/account/promptPaymentMessage.jsp</result>	
+		       <result name="printPaymentAccount">/WEB-INF/jsp/account/printPaymentAccount.jsp</result>
+		       <result name="printPayment">/WEB-INF/jsp/account/printPayment.jsp</result>	
+		
+		<!-- ====================================挂失=========================================== -->
+				<result name="queryToLoss">/WEB-INF/jsp/account/queryToLoss.jsp</result>
+				<result name="printLossAccount">/WEB-INF/jsp/account/printLossAccount.jsp</result>
+				<result name="printLoss">/WEB-INF/jsp/account/printLoss.jsp</result>
+				<result name="promptLossMessage">/WEB-INF/jsp/account/promptLossMessage.jsp</result>
+		<!--  =====================================解挂=========================================== -->
+				<result name="queryToRemoveLoss">/WEB-INF/jsp/account/queryToRemoveLoss.jsp</result>
+				<result name="printRemoveLossAccount">/WEB-INF/jsp/account/printRemoveLossAccount.jsp</result>
+				<result name="printRemoveLoss">/WEB-INF/jsp/account/printRemoveLoss.jsp</result>
+				<result name="promptRemoveLossMessage">/WEB-INF/jsp/account/promptRemoveLossMessage.jsp</result>
+		<!--  =====================================换卡 ======================================== -->	
+		        <result name="queryToExchangeCard">/WEB-INF/jsp/account/queryToExchangeCard.jsp</result>
+				<result name="exchangeCard">/WEB-INF/jsp/account/exchangeCard.jsp</result>
+				<result name="printExchangeCardAccount">/WEB-INF/jsp/account/printExchangeCardAccount.jsp</result>
+				<result name="printExchangeCard">/WEB-INF/jsp/account/printExchangeCard.jsp</result>
+		<!--  =====================================申请销户======================================== -->	
+		        <result name="queryToRequestEndAccount">/WEB-INF/jsp/account/queryToRequestEndAccount.jsp</result>
+				<result name="printRequestEndAccount">/WEB-INF/jsp/account/printRequestEndAccount.jsp</result>
+				<result name="printRequestEnd">/WEB-INF/jsp/account/printRequestEnd.jsp</result>
+				<result name="promptRequestEndAccountMessage">/WEB-INF/jsp/account/promptRequestEndAccountMessage.jsp</result>
+		<!--  =====================================销户======================================== -->	
+		        <result name="queryToEndAccount">/WEB-INF/jsp/account/queryToEndAccount.jsp</result>
+				<result name="printEndAccount">/WEB-INF/jsp/account/printEndAccount.jsp</result>
+				<result name="printEnd">/WEB-INF/jsp/account/printEnd.jsp</result>
+				<result name="promptEndAccountMessage">/WEB-INF/jsp/account/promptEndAccountMessage.jsp</result>							
+		</action>
+		
+		<action name="updateAccountLog_*" method="{1}" class="updateAccountLogAction">
+		    <result name="queryUpdateAccountLog">/WEB-INF/jsp/updateAccountLog/queryUpdateAccountLog.jsp</result>
+		    <result name="show">/WEB-INF/jsp/updateAccountLog/show.jsp</result>
+		</action>
+
+
+
+		<action name="query_*" method="{1}" class="queryAction">
+		  	<result name="query">/WEB-INF/jsp/query/account_query.jsp</result>
+		  	<result name="list">/WEB-INF/jsp/query/account_edit.jsp</result>
+		  	<result name="easyExcelExport">/WEB-INF/jsp/query/easyExcelExport.jsp</result>
+		  	<result name="com">/WEB-INF/jsp/query/comQuery_edit.jsp</result>
+		  	<result name="comList">/WEB-INF/jsp/query/comQuery_list.jsp</result>
+		  	<result name="comContractExcelExport">/WEB-INF/jsp/query/comContractExcelExport.jsp</result>
+		  	<result name="comProjectExcelExport">/WEB-INF/jsp/query/comProjectExcelExport.jsp</result>
+		  	<result name="comItemExcelExport">/WEB-INF/jsp/query/comItemExcelExport.jsp</result>
+		  	<result name="errorExport"></result>
+		  	<result name="like">/WEB-INF/jsp/query/likeQuery_edit.jsp</result>
+		  	<result name="likeList">/WEB-INF/jsp/query/likeQuery_list.jsp</result>
+		  	<result name="likeExcelExport">/WEB-INF/jsp/query/likeExcelExport.jsp</result>
+		</action>
+
+	    <action name="user_*" method="{1}" class="userAction">
+			<result name="list">/WEB-INF/jsp/usercaraccount/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/monitor/edit.jsp</result>
+			<result name="bycontractmonitorlist">/WEB-INF/jsp/monitor/bycontract.jsp</result>
+		</action>
+		<action name="car_*" method="{1}" class="carAction">
+			<result name="list">/WEB-INF/jsp/usercaraccount/add.jsp</result>
+			<result name="edit">/WEB-INF/jsp/monitor/edit.jsp</result>
+			<result name="bycontractmonitorlist">/WEB-INF/jsp/monitor/bycontract.jsp</result>
+		</action>
+		<action name="paramconf_*" class="sysparamconfAction" method="{1}">
+		    <result name="list">/WEB-INF/jsp/sysparamconf/list.jsp</result>
+		    <result name="add">/WEB-INF/jsp/sysparamconf/save.jsp</result>
+		    <result name="query">/WEB-INF/jsp/sysparamconf/query.jsp</result>
+		    <result name="edit">/WEB-INF/jsp/sysparamconf/edit.jsp</result>
+		    <result name="toImportExcel">/WEB-INF/jsp/sysparamconf/importExcel.jsp</result>
+		    <result name="dataToExcel">/WEB-INF/jsp/sysparamconf/list.jsp</result>
+		</action>
+	<action name="accountTrade_*" method="{1}" class="accountTradeAction" >
+		    
+		    <result name="queryToCorrect">/WEB-INF/jsp/accountTrade/queryToCorrect.jsp</result>	
+		    <result name="correct">/WEB-INF/jsp/accountTrade/correct.jsp</result>	
+		    <result name="promptCorrectMessage">/WEB-INF/jsp/accountTrade/promptCorrectMessage.jsp</result>	
+		    <result name="printCorrectAccount">/WEB-INF/jsp/accountTrade/printCorrectAccount.jsp</result>
+		    <result name="printCorrect">/WEB-INF/jsp/accountTrade/printCorrect.jsp</result>			 
+		   
+		    <result name="balance">/WEB-INF/jsp/accountTrade/balance.jsp</result>
+		    <result name="queryAccountTrade">/WEB-INF/jsp/accountTrade/queryAccountTrade.jsp</result>
+		    <result name="show">/WEB-INF/jsp/accountTrade/show.jsp</result>	   
+		    
+		    
+		    <result name="latestBalance">/WEB-INF/jsp/latestAccountTrade/latestAccountBalance.jsp</result>
+		    <result name="queryLatestBalance">/WEB-INF/jsp/latestAccountTrade/queryLatestBalance.jsp</result>
+		    <result name="validateVerify">/WEB-INF/jsp/validateVerify/list_validateVerify.jsp</result>
+		    <result name="queryvalidateVerify">/WEB-INF/jsp/validateVerify/query_validateVerify.jsp</result>
+		   </action>
+
+	<!--参数管理 start -->
+	<action name="baseInfo_*" method="{1}" class="baseInformationAction">
+		<result name="city_list">/WEB-INF/jsp/parameterManage/baseInformation/city_list.jsp</result>
+		<result name="city_edit">/WEB-INF/jsp/parameterManage/baseInformation/city_edit.jsp</result>
+		<result name="city_add">/WEB-INF/jsp/parameterManage/baseInformation/city_add.jsp</result>
+		
+		<result name="area_list">/WEB-INF/jsp/parameterManage/baseInformation/area_list.jsp</result>
+		<result name="area_edit">/WEB-INF/jsp/parameterManage/baseInformation/area_edit.jsp</result>
+		<result name="area_add">/WEB-INF/jsp/parameterManage/baseInformation/area_add.jsp</result>
+		
+		<result name="park_list">/WEB-INF/jsp/parameterManage/baseInformation/park_list.jsp</result>
+		<result name="park_edit">/WEB-INF/jsp/parameterManage/baseInformation/park_edit.jsp</result>
+		<result name="park_add">/WEB-INF/jsp/parameterManage/baseInformation/park_add.jsp</result>
+		
+		<result name="carSpace_list">/WEB-INF/jsp/parameterManage/baseInformation/carSpace_list.jsp</result>
+		<result name="carSpace_edit">/WEB-INF/jsp/parameterManage/baseInformation/carSpace_edit.jsp</result>
+		<result name="carSpace_add">/WEB-INF/jsp/parameterManage/baseInformation/carSpace_add.jsp</result>
+	   
+	    <result name="position_list">/WEB-INF/jsp/parameterManage/baseInformation/position_list.jsp</result>
+		<result name="position_edit">/WEB-INF/jsp/parameterManage/baseInformation/position_edit.jsp</result>
+		<result name="position_add">/WEB-INF/jsp/parameterManage/baseInformation/position_add.jsp</result>
+	
+	    <result name="gateway_list">/WEB-INF/jsp/parameterManage/baseInformation/gateway_list.jsp</result>
+		<result name="gateway_edit">/WEB-INF/jsp/parameterManage/baseInformation/gateway_edit.jsp</result>
+		<result name="gateway_add">/WEB-INF/jsp/parameterManage/baseInformation/gateway_add.jsp</result>
+	
+	    <result name="lane_list">/WEB-INF/jsp/parameterManage/baseInformation/lane_list.jsp</result>
+		<result name="lane_edit">/WEB-INF/jsp/parameterManage/baseInformation/lane_edit.jsp</result>
+		<result name="lane_add">/WEB-INF/jsp/parameterManage/baseInformation/lane_add.jsp</result>
+		
+		 <result name="laneUse_list">/WEB-INF/jsp/parameterManage/baseInformation/laneUse_list.jsp</result>
+		<result name="laneUse_edit">/WEB-INF/jsp/parameterManage/baseInformation/laneUse_edit.jsp</result>
+		<result name="laneUse_add">/WEB-INF/jsp/parameterManage/baseInformation/laneUse_add.jsp</result>
+		
+		<result name="squad_list">/WEB-INF/jsp/parameterManage/baseInformation/squad_list.jsp</result>
+		<result name="squad_edit">/WEB-INF/jsp/parameterManage/baseInformation/squad_edit.jsp</result>
+		<result name="squad_add">/WEB-INF/jsp/parameterManage/baseInformation/squad_add.jsp</result>
+	
+		<result name="supplyLight_list">/WEB-INF/jsp/parameterManage/baseInformation/supplyLight_list.jsp</result>
+		<result name="supplyLight_edit">/WEB-INF/jsp/parameterManage/baseInformation/supplyLight_edit.jsp</result>
+		<result name="supplyLight_add">/WEB-INF/jsp/parameterManage/baseInformation/supplyLight_add.jsp</result>
+	</action>
+
+    <action name="priceRule_*" method="{1}" class="priceRuleAction">
+    	<result name="list">/WEB-INF/jsp/parameterManage/priceRule_list.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/priceRule_edit.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/priceRule_add.jsp</result>		
+    </action>
+     <action name="userCardRate_*" method="{1}" class="userCardRateAction">
+    	<result name="list">/WEB-INF/jsp/parameterManage/userCardRate_list.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/userCardRate_edit.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/userCardRate_add.jsp</result>		
+    </action>
+    <action name="pricepasstype_*" method="{1}" class="pricepasstypeAction">
+    	<result name="list">/WEB-INF/jsp/parameterManage/pricepasstype_list.jsp</result>
+    	<result name="add">/WEB-INF/jsp/parameterManage/pricepasstype_add.jsp</result>
+    </action>
+    <action name="priceBase_*" method="{1}" class="priceBaseAction">
+    	<result name="list">/WEB-INF/jsp/parameterManage/priceBase_list.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/priceBase_edit.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/priceBase_add.jsp</result>		
+    </action>
+    
+    <action name="zjuPriceConfig_*" method="{1}" class="ZJUPriceConfigAction">
+    	<result name="feeRuleTypeDef_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/feeRuleTypeDef_list.jsp</result>
+		<result name="feeRuleTypeDef_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/feeRuleTypeDef_edit.jsp</result>
+		<result name="feeRuleTypeDef_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/feeRuleTypeDef_add.jsp</result>		
+		
+		<result name="freeDays_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/freeDays_list.jsp</result>
+		<result name="freeDays_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/freeDays_edit.jsp</result>
+		<result name="freeDays_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/freeDays_add.jsp</result>	
+		
+		<result name="inOutSignDef_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/inOutSignDef_list.jsp</result>
+		<result name="inOutSignDef_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/inOutSignDef_edit.jsp</result>
+		<result name="inOutSignDef_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/inOutSignDef_add.jsp</result>	
+		
+		<result name="timesSignDef_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/timesSignDef_list.jsp</result>
+		<result name="timesSignDef_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/timesSignDef_edit.jsp</result>
+		<result name="timesSignDef_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/timesSignDef_add.jsp</result>	
+		
+		<result name="vehFreeTimes_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/vehFreeTimes_list.jsp</result>
+		<result name="vehFreeTimes_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/vehFreeTimes_edit.jsp</result>
+		<result name="vehFreeTimes_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/vehFreeTimes_add.jsp</result>	
+		
+		<result name="priceRule_zd_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/priceRule_zd_list.jsp</result>
+		<result name="priceRule_zd_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/priceRule_zd_edit.jsp</result>
+		<result name="priceRule_zd_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/priceRule_zd_add.jsp</result>	
+		
+		<result name="priceBase_list">/WEB-INF/jsp/parameterManage/zjuPriceConfig/zju_PriceBase_list.jsp</result>
+		<result name="priceBase_edit">/WEB-INF/jsp/parameterManage/zjuPriceConfig/zju_PriceBase_edit.jsp</result>
+		<result name="priceBase_add">/WEB-INF/jsp/parameterManage/zjuPriceConfig/zju_PriceBase_add.jsp</result>
+		
+    </action>
+    
+    <action name="paramconf_*" class="sysparamconfAction" method="{1}">
+		    <result name="list">/WEB-INF/jsp/parameterManage/sysparamconf/list.jsp</result>
+		    <result name="add">/WEB-INF/jsp/parameterManage/sysparamconf/save.jsp</result>
+		    <result name="query">/WEB-INF/jsp/parameterManage/sysparamconf/query.jsp</result>
+		    <result name="edit">/WEB-INF/jsp/parameterManage/sysparamconf/edit.jsp</result>
+		    <result name="toImportExcel">/WEB-INF/jsp/parameterManage/sysparamconf/importExcel.jsp</result>
+		    <result name="dataToExcel">/WEB-INF/jsp/parameterManage/sysparamconf/list.jsp</result>
+	</action>
+	
+	<action name="cardInfo_*" method="{1}" class="cardInfoAction">
+    	<result name="tollyCardBlackList_list">/WEB-INF/jsp/parameterManage/cardInfo/tollyCardBlackList_list.jsp</result>
+		<result name="tollyCardBlackList_edit">/WEB-INF/jsp/parameterManage/cardInfo/tollyCardBlackList_edit.jsp</result>
+		<result name="tollyCardBlackList_add">/WEB-INF/jsp/parameterManage/cardInfo/tollyCardBlackList_add.jsp</result>		
+		
+		<result name="storeCardBlackList_list">/WEB-INF/jsp/parameterManage/cardInfo/storeCardBlackList_list.jsp</result>
+		<result name="storeCardBlackList_edit">/WEB-INF/jsp/parameterManage/cardInfo/storeCardBlackList_edit.jsp</result>
+		<result name="storeCardBlackList_add">/WEB-INF/jsp/parameterManage/cardInfo/storeCardBlackList_add.jsp</result>	
+		
+		<result name="passCardBlackList_list">/WEB-INF/jsp/parameterManage/cardInfo/passCardBlackList_list.jsp</result>
+		<result name="passCardBlackList_edit">/WEB-INF/jsp/parameterManage/cardInfo/passCardBlackList_edit.jsp</result>
+		<result name="passCardBlackList_add">/WEB-INF/jsp/parameterManage/cardInfo/passCardBlackList_add.jsp</result>	
+		
+		<result name="opCardBlackList_list">/WEB-INF/jsp/parameterManage/cardInfo/opCardBlackList_list.jsp</result>
+		<result name="opCardBlackList_edit">/WEB-INF/jsp/parameterManage/cardInfo/opCardBlackList_edit.jsp</result>
+		<result name="opCardBlackList_add">/WEB-INF/jsp/parameterManage/cardInfo/opCardBlackList_add.jsp</result>	
+		
+		<result name="dateStart_list">/WEB-INF/jsp/parameterManage/cardInfo/dateStart_list.jsp</result>	
+		
+		<result name="userCardBlackList_list">/WEB-INF/jsp/parameterManage/cardInfo/userCardBlackList_list.jsp</result>
+		<result name="userCardBlackList_edit">/WEB-INF/jsp/parameterManage/cardInfo/userCardBlackList_edit.jsp</result>
+		<result name="userCardBlackList_add">/WEB-INF/jsp/parameterManage/cardInfo/userCardBlackList_add.jsp</result>	
+		
+    </action>
+	<action name="systemPara_*" class="systemParaAction" method="{1}">
+		<result name="systemPara_list">/WEB-INF/jsp/parameterManage/systemPara_list.jsp</result>
+		<result name="systemPara_add">/WEB-INF/jsp/parameterManage/systemPara_add.jsp</result>
+		<result name="systemPara_edit">/WEB-INF/jsp/parameterManage/systemPara_edit.jsp</result> 
+	</action>
+	<action name="sendPara_*" class="sendParaAction" method="{1}">
+		<result name="sendPara_list">/WEB-INF/jsp/parameterManage/sendPara_list.jsp</result>
+		<result name="failSendPara">/WEB-INF/jsp/parameterManage/FailSendPara_list.jsp</result>
+	</action>
+	
+	<action name="laneRole_*" class="laneRoleAction" method="{1}">
+		<result name="laneRole_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneRole_list.jsp</result>
+		<result name="laneRole_add">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneRole_add.jsp</result>
+		<result name="laneRole_edit">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneRole_edit.jsp</result>
+		<result name="laneRole_setPermission">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneRole_setPermission.jsp</result>
+	</action>
+	<action name="laneModule_*" class="laneModuleAction" method="{1}">
+		<result name="laneModule_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneModule_list.jsp</result>
+		<result name="laneModule_add">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneModule_add.jsp</result>
+		<result name="laneModule_edit">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneModule_edit.jsp</result>
+	</action>
+	<action name="laneOperator_*" class="laneOperatorAction" method="{1}">
+		<result name="laneOperator_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneOperator_list.jsp</result>
+		<result name="laneOperator_add">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneOperator_add.jsp</result>
+		<result name="laneOperator_edit">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneOperator_edit.jsp</result>
+	</action>
+	<action name="laneOperatorRole_*" class="laneOperatorRoleAction" method="{1}">
+		<result name="laneOperatorRole_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneOperatorRole_list.jsp</result>
+	</action>
+    <action name="laneOperatorPrivilege_*" class="laneOperatorPrivilegeAction" method="{1}">
+		<result name="laneOperatorPrivilege_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneOperatorPrivilege_list.jsp</result>
+	</action>
+	<action name="laneRoleModule_*" class="laneRoleModuleAction" method="{1}">
+		<result name="laneRoleModule_list">/WEB-INF/jsp/parameterManage/laneOperatorInfo/laneRoleModule_list.jsp</result>
+	</action>
+	<action name="vehNoCmpPlate_*" class="vehNoCmpPlateAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/parameterManage/vehNoCmpPlate_list.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/vehNoCmpPlate_add.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/vehNoCmpPlate_edit.jsp</result>
+	</action>
+	
+	<action name="operatePara_*" class="operateParameterAction" method="{1}">
+		<result name="vehTypeCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/vehTypeCode_list.jsp</result>
+		<result name="vehClassCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/vehClassCode_list.jsp</result>
+		<result name="deviceCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/deviceCode_list.jsp</result>
+		<result name="functionKey_list">/WEB-INF/jsp/parameterManage/OperateParameter/functionKey_list.jsp</result>
+		<result name="carClassCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/carClassCode_list.jsp</result>
+		<result name="carBrandCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/carBrandCode_list.jsp</result>
+		<result name="carTypeTrans_list">/WEB-INF/jsp/parameterManage/OperateParameter/carTypeTrans_list.jsp</result>
+		<result name="laneType_list">/WEB-INF/jsp/parameterManage/OperateParameter/laneType_list.jsp</result>
+		<result name="spEventCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/spEventCode_list.jsp</result>
+		<result name="deviceActionCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/deviceActionCode_list.jsp</result>
+		<result name="deviceErrorCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/deviceErrorCode_list.jsp</result>
+		<result name="ticketTypeCode_list">/WEB-INF/jsp/parameterManage/OperateParameter/ticketTypeCode_list.jsp</result>
+	</action>
+	<action name="sendParaResult_*" class="sendParaResultAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/parameterManage/sendParaResult_list.jsp</result>
+	</action>
+	<!--参数管理 end -->
+	<action name="iCCard_*" method="{1}" class="ICCardAction">
+	    <result name="allot">/WEB-INF/jsp/cardBill/ICCard/allot.jsp</result>
+	    <result name="queryICCardToLoss">/WEB-INF/jsp/cardBill/ICCard/queryICCardToLoss.jsp</result>
+	    <result name="loss">/WEB-INF/jsp/cardBill/ICCard/loss.jsp</result>
+	    <result name="queryICToRemoveLoss">/WEB-INF/jsp/cardBill/ICCard/queryICToRemoveLoss.jsp</result>
+	    <result name="queryICCard">/WEB-INF/jsp/cardBill/ICCard/queryICCard.jsp</result>
+	    <result name="register">/WEB-INF/jsp/cardBill/ICCard/register.jsp</result>
+	    <result name="statistics">/WEB-INF/jsp/cardBill/ICCard/statistics.jsp</result>
+   </action>
+   
+   	<action name="parkCard_*" method="{1}" class="parkCardAction">	    
+	    <result name="queryParkCardToManage">/WEB-INF/jsp/cardBill/parkCard/queryParkCardToManage.jsp</result>
+	    <result name="register">/WEB-INF/jsp/cardBill/parkCard/register.jsp</result>
+	    <result name="update">/WEB-INF/jsp/cardBill/parkCard/update.jsp</result>
+	    <result name="queryToLossAndRLoss">/WEB-INF/jsp/cardBill/parkCard/queryToLossAndRLoss.jsp</result>	
+	    <result name="queryPCToPayment">/WEB-INF/jsp/cardBill/parkCard/queryPCToPayment.jsp</result>
+	    <result name="payment">/WEB-INF/jsp/cardBill/parkCard/payment.jsp</result>
+	    <result name="queryPCToGroup">/WEB-INF/jsp/cardBill/parkCard/queryPCToGroup.jsp</result>
+	    <result name="queryCGInfoToGroup">/WEB-INF/jsp/cardBill/parkCard/queryCGInfoToGroup.jsp</result>
+	    <result name="group">/WEB-INF/jsp/cardBill/parkCard/group.jsp</result>
+	    <result name="queryCGInfoToManage">/WEB-INF/jsp/cardBill/parkCard/queryCGInfoToManage.jsp</result>
+	    <result name="addCardGroupInfo">/WEB-INF/jsp/cardBill/parkCard/addCardGroupInfo.jsp</result>
+	    <result name="updateCardGroupInfo">/WEB-INF/jsp/cardBill/parkCard/updateCardGroupInfo.jsp</result>
+	    <result name="deleteGroupMember">/WEB-INF/jsp/cardBill/parkCard/deleteGroupMember.jsp</result> 
+	    <result name="queryUserCardInfo">/WEB-INF/jsp/cardBill/parkCard/queryUserCardInfo.jsp</result> 
+	    <result name="queryUserCardBillToCheck">/WEB-INF/jsp/cardBill/parkCard/queryUCBillToCheck.jsp</result>     
+	    <result name="queryUserCardInfoHistory">/WEB-INF/jsp/cardBill/parkCard/queryUserCardInfoHistory.jsp</result>   
+	    <result name="showUserCardInfoHistory">/WEB-INF/jsp/cardBill/parkCard/showUserCardInfoHistory.jsp</result>
+	    <result name="queryWhite">/WEB-INF/jsp/cardBill/parkCard/queryWhite.jsp</result>
+	    <result name="printsWhite">/WEB-INF/jsp/cardBill/parkCard/printWhite.jsp</result>    
+	    <result name="printsUserCardInfo">/WEB-INF/jsp/cardBill/parkCard/printUserCardInfo.jsp</result>	    	     
+   </action>
+   
+   	<action name="bill_*" method="{1}" class="billAction">	
+   	    <result name="queryBillStorage">/WEB-INF/jsp/cardBill/bill/queryBillStorage.jsp</result>
+   	    <result name="queryToAdd">/WEB-INF/jsp/cardBill/bill/queryToAdd.jsp</result>  
+   	    <result name="add">/WEB-INF/jsp/cardBill/bill/add.jsp</result> 
+     	<result name="moveOut">/WEB-INF/jsp/cardBill/bill/moveOut.jsp</result>
+     	<result name="moveIn">/WEB-INF/jsp/cardBill/bill/moveIn.jsp</result> 
+     	<result name="update">/WEB-INF/jsp/cardBill/bill/update.jsp</result>    	   	
+   	</action>
+   	<action name="passCard_*" method="{1}" class="passCardAction">	
+   	    <result name="queryToCardHandOutIn">/WEB-INF/jsp/cardBill/passCard/queryToCardHandOutIn.jsp</result> 
+   	    <result name="addCardHandOutIn">/WEB-INF/jsp/cardBill/passCard/addCardHandOutIn.jsp</result>   	     
+   	    <result name="updateCardHandOutIn">/WEB-INF/jsp/cardBill/passCard/updateCardHandOutIn.jsp</result>    	    
+   	</action>
+   	<action name="iDCard_*" method="{1}" class="IDCardAction">
+   	<result name="queryIDCardInfo">/WEB-INF/jsp/cardBill/IDCard/queryIDCardInfo.jsp</result> 
+   	<result name="addIDCardInfo">/WEB-INF/jsp/cardBill/IDCard/addIDCardInfo.jsp</result>  
+   	<result name="updateIDCardInfo">/WEB-INF/jsp/cardBill/IDCard/updateIDCardInfo.jsp</result>   
+   	
+   	</action>
+	
+	<!-- 车辆安全  -->
+	<action name="securityUserInfo_*" method="{1}" class="securityUserInfoAction">
+		<result name="success">/WEB-INF/jsp/securityUserInfo/querySUserInfo.jsp</result>
+		<result name="toRegister">/WEB-INF/jsp/securityUserInfo/toRegister.jsp</result>
+		<result name="toUpdate">/WEB-INF/jsp/securityUserInfo/toUpdate.jsp</result>
+	</action>
+	<action name="securityCommand_*" method="{1}" class="securityCommandAction">
+		<result name="success">/WEB-INF/jsp/securityCommand/query.jsp</result>
+		<result name="addCommand">/WEB-INF/jsp/securityCommand/addCommand.jsp</result>
+		<result name="update">/WEB-INF/jsp/securityCommand/updateCommand.jsp</result>
+	</action>
+	<action name="securityCommandBackup_*" method="{1}" class="securityCommandBackupAction">
+		<result name="success">/WEB-INF/jsp/securityCommandBackup/query.jsp</result>
+		<result name="show">/WEB-INF/jsp/securityCommandBackup/show.jsp</result>
+	</action>
+	<action name="securityVehPass_*" method="{1}" class="securityVehPassAction">
+		<result name="success">/WEB-INF/jsp/securityVehPass/query.jsp</result>
+		<result name="vehPass">/WEB-INF/jsp/securityVehPass/vehPass.jsp</result>
+		<result name="history">/WEB-INF/jsp/securityVehPass/history.jsp</result>
+	</action>
+	
+	<!-- 丢卡查询 -->
+	<action name="lostCard_*" method="{1}" class="lostCardAction">
+		<result name="cardDynamic">/WEB-INF/jsp/lostCard/query.jsp</result>
+		<result name="ok">/WEB-INF/jsp/lostCard/update.jsp</result>
+		<result name="history">/WEB-INF/jsp/lostCard/queryHistory.jsp</result>
+		<result name="message">/WEB-INF/jsp/lostCard/historyMessage.jsp</result>
+		<result name="identify">/WEB-INF/jsp/lostCard/queryIdentify.jsp</result>
+		<result name="updateIdentify">/WEB-INF/jsp/lostCard/updateIdentify.jsp</result>
+	</action>
+	<!-- 流水查询 -->
+	<action name="waterQuery_*" method="{1}" class="waterQueryAction">
+		<result name="waterQuery">/WEB-INF/jsp/lostCard/waterQuery.jsp</result>
+		<result name="inShow">/WEB-INF/jsp/lostCard/inShow.jsp</result>
+		<result name="outShow">/WEB-INF/jsp/lostCard/outShow.jsp</result>
+		<result name="complate">/WEB-INF/jsp/lostCard/complate.jsp</result>
+		<!-- 流水打印 -->
+		<result name="printList">/WEB-INF/jsp/waterPrint/printList.jsp</result>
+			<result name="print">/WEB-INF/jsp/waterPrint/print.jsp</result>
+	</action>
+	<!-- 系统日志定时任务 -->
+	<action name="systemLogTask_*" method="{1}" class="systemLogTaskAction">
+		<result name="timeTask">/WEB-INF/jsp/systemLogTask/systemLogTimeTask.jsp</result>
+	</action>
+	<!-- 功能配置-->
+	<action name="functionConfig_*" method="{1}" class="functionConfigAction">
+		<result name="functionConfig">/WEB-INF/jsp/functionConfig/functionConfig.jsp</result>
+	</action>
+	<!--特殊车辆管理 -->
+	<action name="specialVeh_*" class="specialVehAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/systemMonitoring/specialVeh_list.jsp</result>
+		<result name="add">/WEB-INF/jsp/systemMonitoring/specialVeh_add.jsp</result>
+		<result name="edit">/WEB-INF/jsp/systemMonitoring/specialVeh_edit.jsp</result>
+		<result name="handleMsg">/WEB-INF/jsp/systemMonitoring/specialVeh_handleMsg.jsp</result>
+		<result name="monitoring">/WEB-INF/jsp/systemMonitoring/monitoring.jsp</result>
+	</action>
+	<!--卡分布统计 -->
+	<action name="cardScatter_*" class="cardScatterAction" method="{1}">
+		<result name="cardScatter">/WEB-INF/jsp/cardScatter/query.jsp</result>
+	</action>
+	<!--车位动态信息 -->
+	<action name="carSpaceDynamic_*" class="carSpaceDynamicAction" method="{1}">
+		<result name="queryCarSpaceDynamicToManage">/WEB-INF/jsp/carSpaceDynamic/queryCarSpaceDynamicToManage.jsp</result>
+		<result name="carSpaceDynamicToUpdate">/WEB-INF/jsp/carSpaceDynamic/update.jsp</result>
+		<result name="add">/WEB-INF/jsp/carSpaceDynamic/add.jsp</result>
+	</action>
+	<!--车位显示信息 -->
+	<action name="carSpaceShowMessage_*" class="carSpaceShowMessageAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/parameterManage/CarSpaceShowMessage/list.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/CarSpaceShowMessage/add.jsp</result>
+		<result name="update">/WEB-INF/jsp/parameterManage/CarSpaceShowMessage/update.jsp</result>
+		<result name="newList">/WEB-INF/jsp/parameterManage/CarSpaceShowMessage/newList.jsp</result>
+	</action>
+	
+	<action name="freeAction_*" class="freeAction" method="{1}">
+		<result name="index">/WEB-INF/jsp/free/index.jsp</result>
+	</action>
+	
+	<action name="carType_*" class="carTypeAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/parameterManage/baseInformation/carType_list.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/baseInformation/carType_add.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/baseInformation/carType_edit.jsp</result>
+	</action>
+	<action name="carSmallType_*" class="carSmallTypeAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/parameterManage/baseInformation/carSmallType_list.jsp</result>
+		<result name="add">/WEB-INF/jsp/parameterManage/baseInformation/carSmallType_add.jsp</result>
+		<result name="edit">/WEB-INF/jsp/parameterManage/baseInformation/carSmallType_edit.jsp</result>
+	</action>
+	<!-- 车辆停留时间查询 -->
+	<action name="carStopTimeQuery_*" class="carStopTimeQueryAction" method="{1}">
+		<result name="list">/WEB-INF/jsp/carStopTimeQuery/list.jsp</result>
+	</action>
+	</package> 
+	<package name="dataService" extends="struts-default">	 	 
+         <!-- 数据接口-->
+	     <action name="interface_*" method="{1}" class="interfaceAction"> </action>   
+	</package>	
+</struts>
